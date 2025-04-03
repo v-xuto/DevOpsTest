@@ -1,0 +1,16 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: PrintMessages
+  displayName: 'Print Messages Job'
+  steps:
+  - script: echo "Hello, Azure Pipelines!"
+    displayName: 'Print Hello Message'
+  - script: echo "This is a simple pipeline example."
+    displayName: 'Print Example Message'
+  - script: echo "Pipeline execution completed."
+    displayName: 'Print Completion Message'
