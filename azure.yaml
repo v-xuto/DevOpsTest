@@ -1,16 +1,35 @@
 trigger:
 - main
 
-pool:
-  vmImage: 'ubuntu-latest'
-
-jobs:
-- job: PrintMessages
-  displayName: 'Print Messages Job'
-  steps:
-  - script: echo "Hello, Azure Pipelines!"
-    displayName: 'Print Hello Message'
-  - script: echo "This is a simple pipeline example."
-    displayName: 'Print Example Message'
-  - script: echo "Pipeline execution completed."
-    displayName: 'Print Completion Message'
+stages:
+- stage: Build
+  jobs:
+  - job: BuildJob
+    displayName: 'Build Job'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - script: echo "Building the project..."
+      displayName: 'Run Build Script'
+      
+- stage: Test
+  dependsOn: Build
+  jobs:
+  - job: TestJob
+    displayName: 'Test Job'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - script: echo "Running tests..."
+      displayName: 'Run Tests'
+      
+- stage: Deploy
+  dependsOn: Test
+  jobs:
+  - job: DeployJob
+    displayName: 'Deploy Job'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - script: echo "Deploying the project..."
+      displayName: 'Run Deployment Script'
