@@ -12,19 +12,30 @@ stages:
     - script: echo "Building the project..."
       displayName: 'Run Build Script'
       
-- stage: Test
+- stage: Test1
   dependsOn: Build
   jobs:
-  - job: TestJob
-    displayName: 'Test Job'
+  - job: TestJob1
+    displayName: 'Test Job1'
     pool:
       vmImage: 'ubuntu-latest'
     steps:
     - script: echo "Running tests..."
       displayName: 'Run Tests'
-      
+
+- stage: Test2
+  dependsOn: Build
+  jobs:
+  - job: TestJob2
+    displayName: 'Test Job2'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - script: echo "Running tests2..."
+      displayName: 'Run Tests2'
+
 - stage: Deploy
-  dependsOn: Test
+  dependsOn: Test1
   jobs:
   - job: DeployJob
     displayName: 'Deploy Job'
@@ -33,3 +44,13 @@ stages:
     steps:
     - script: echo "Deploying the project..."
       displayName: 'Run Deployment Script'
+
+- stage: Delete
+  jobs:
+  - job: DeleteJob
+    displayName: 'Delete Job'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - script: echo "Deleteing the project..."
+      displayName: 'Run Delete Script'
